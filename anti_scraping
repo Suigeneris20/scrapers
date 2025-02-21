@@ -1,0 +1,39 @@
+USER_AGENTS = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1"
+]
+
+# Proxy settings (use a paid or free rotating proxy service if needed)
+USE_PROXY = False
+PROXY_SERVER = "http://your-proxy-server:port"
+
+# Function to create and configure a stealthy browser context
+def create_stealth_context(playwright, use_proxy=False):
+    """Creates a Playwright browser context with stealth settings."""
+    args = ["--disable-blink-features=AutomationControlled"]
+
+    # Enable proxy if needed
+    proxy = {"server": PROXY_SERVER} if use_proxy else None
+
+    browser = playwright.chromium.launch(headless=True, args=args, proxy=proxy)
+    context = browser.new_context(
+        user_agent=random.choice(USER_AGENTS),  # Rotate user-agent
+        viewport={"width": random.randint(800, 1200), "height": random.randint(600, 900)},  # Random viewport size
+        java_script_enabled=True,
+        ignore_https_errors=True,
+    )
+
+    # Disable WebRTC fingerprinting
+    context.add_init_script("Object.defineProperty(navigator, 'webdriver', { get: () => undefined })")
+    
+    return browser, context
+
+# Main function to scrape the website
+def scrape_harvest_and_mill():
+    with sync_playwright() as p:
+        browser, context = create_stealth_context(p, use_proxy=USE_PROXY)
+        page = context.new_page()
+        
+

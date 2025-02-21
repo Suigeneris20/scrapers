@@ -1,0 +1,6 @@
+Tech Stack:
+Backend: Flask (or FastAPI if you prefer async support)
+Database: SQLite/PostgreSQL to store scraped fashion data
+Frontend: HTML, Tailwind CSS, JavaScript (Alpine.js or React if needed)
+Data Handling: Pandas for filtering & processing data
+Scraping: Playwright/Selenium for dynamic scraping
