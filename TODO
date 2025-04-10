@@ -1,2 +1,4 @@
-write an async version that doesn't user css or xpath in locators:
-reference: https://playwright.dev/python/docs/locators#locate-by-css-or-xpath
+edit "to_db.py"
+Use correct SQLALCHEMY URI
+correctly configure "Insert into Database"
+May need to rescrape objects to get price

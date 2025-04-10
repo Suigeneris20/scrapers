@@ -1,0 +1,2 @@
+write an async version that doesn't user css or xpath in locators:
+reference: https://playwright.dev/python/docs/locators#locate-by-css-or-xpath
